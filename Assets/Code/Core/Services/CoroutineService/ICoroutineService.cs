@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace UIPackage.Services.Coroutines
+namespace UIPackage.Core.Services
 {
     public interface ICoroutineService
     {

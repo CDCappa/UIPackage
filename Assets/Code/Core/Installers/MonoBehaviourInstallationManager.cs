@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Core;
+using UIPackage.Core.Services;
 
 using UnityEngine;
 

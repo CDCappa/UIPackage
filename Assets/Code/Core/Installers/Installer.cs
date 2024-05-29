@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using UIPackage.Core.Services;
+
 using UnityEngine;
 
 namespace UIPackage.Core.Installers

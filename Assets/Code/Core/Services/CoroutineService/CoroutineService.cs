@@ -6,7 +6,7 @@ using UIPackage.Core.Installers;
 
 using UnityEngine;
 
-namespace UIPackage.Services.Coroutines
+namespace UIPackage.Core.Services
 {
     public class CoroutineService : MonoBehaviourService, ICoroutineService, IDisposable
     {

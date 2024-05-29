@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine.Assertions;
 
-namespace Core
+namespace UIPackage.Core.Services
 {
     public class ServiceLocator
     {

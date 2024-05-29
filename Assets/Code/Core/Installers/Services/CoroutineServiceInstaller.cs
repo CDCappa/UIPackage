@@ -1,11 +1,9 @@
-using Core;
-
 using UIPackage.Core.Installers;
-using UIPackage.Services.Coroutines;
+using UIPackage.Core.Services;
 
 using UnityEngine;
 
-namespace UIPackage.Services.Installers
+namespace UIPackage.Installers.Services
 {
     public class CoroutineServiceInstaller : Installer
     {
