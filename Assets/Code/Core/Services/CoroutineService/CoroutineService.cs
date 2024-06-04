@@ -13,38 +13,55 @@ namespace UIPackage.Core.Services
         private Dictionary<object, Dictionary<string, Coroutine>> _activeUniqueCoroutines = new Dictionary<object, Dictionary<string, Coroutine>>();
         private Dictionary<object, Dictionary<Guid, Coroutine>> _activeCoroutines = new Dictionary<object, Dictionary<Guid, Coroutine>>();
 
-        public void WaitForSeconds(object owner, Action action, float seconds, bool useUnscaledTime = false)
+        public void WaitForSeconds(object owner, Action action, float totalTime, bool useUnscaledTime = false)
         {
-            StartCoroutine(owner ?? this, WaitForSecondsCoroutine(action, seconds, useUnscaledTime));
+            StartCoroutine(owner ?? this, CO_WaitForSecondsCoroutine(action, totalTime, useUnscaledTime));
+        }
+
+        public void PerformingActionsOverTime(object owner, Action<float, float> actionPerFrame, Action callback, float totalTime, bool useUnscaledTime = false)
+        {
+            StartCoroutine(owner ?? this, CO_PerformingActionsOverTime(actionPerFrame, callback, totalTime, useUnscaledTime));
+        }
+        public void PerformingActionsOverTime(object owner, Action<float, float> actionByTime, float actionInterval, Action callback, float totalTime, bool useUnscaledTime = false)
+        {
+            StartCoroutine(owner ?? this, CO_PerformingActionsOverTime(actionByTime, actionInterval, callback, totalTime, useUnscaledTime));
         }
 
         public void WaitUntilCondition(object owner, Func<bool> condition, Action action)
         {
-            StartCoroutine(owner ?? this, WaitUntilConditionCoroutine(condition, action));
+            StartCoroutine(owner ?? this, CO_WaitUntilConditionCoroutine(condition, action));
+        }
+        public void WaitUntilCondition(object owner, Func<bool> condition, Action<float> actionOverTime, Action callback, bool useUnscaledTime = false)
+        {
+            StartCoroutine(owner ?? this, CO_WaitUntilConditionCoroutine(condition, actionOverTime, callback, useUnscaledTime));
+        }
+        public void WaitUntilCondition(object owner, Func<bool> condition, Action<float> actionOverTime, float actionInterval, Action callback, bool useUnscaledTime = false)
+        {
+            StartCoroutine(owner ?? this, CO_WaitUntilConditionCoroutine(condition, actionOverTime, actionInterval, callback, useUnscaledTime));
         }
 
         public void WaitForEndOfCurrentFrame(Action action)
         {
-            StartCoroutine(WaitForEndOfFrameCoroutine(action));
+            StartCoroutine(CO_WaitForEndOfFrameCoroutine(action));
         }
 
         public void WaitForCountOfFrames(object owner, Action action, int frameDelayCount = 1)
         {
             if (frameDelayCount > 1)
             {
-                StartCoroutine(owner ?? this, WaitForFramesCoroutine(action, frameDelayCount));
+                StartCoroutine(owner ?? this, CO_WaitForFramesCoroutine(action, frameDelayCount));
             }
             else
             {
-                StartCoroutine(WaitForFramesCoroutine(action, frameDelayCount));
+                StartCoroutine(CO_WaitForFramesCoroutine(action, frameDelayCount));
             }
         }
 
-        private IEnumerator WaitForSecondsCoroutine(Action action, float seconds, bool useUnscaledTime)
+        private IEnumerator CO_WaitForSecondsCoroutine(Action action, float totalTime, bool useUnscaledTime)
         {
             float elapsedTime = 0f;
 
-            while (elapsedTime < seconds)
+            while (elapsedTime < totalTime)
             {
                 elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
                 yield return null;
@@ -53,19 +70,86 @@ namespace UIPackage.Core.Services
             action.Invoke();
         }
 
-        private IEnumerator WaitUntilConditionCoroutine(Func<bool> condition, Action action)
+        private IEnumerator CO_PerformingActionsOverTime(Action<float, float> actionOverTime, Action callback, float totalTime, bool useUnscaledTime)
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < totalTime)
+            {
+                elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+                actionOverTime.Invoke(elapsedTime, totalTime);
+                yield return null;
+            }
+
+            callback?.Invoke();
+        }
+        private IEnumerator CO_PerformingActionsOverTime(Action<float, float> actionByTime, float actionInterval, Action callback, float totalTime, bool useUnscaledTime)
+        {
+            float elapsedTime = 0f;
+            float nextActionTime = 0f;
+
+            while (elapsedTime < totalTime)
+            {
+                elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+
+                if (elapsedTime >= nextActionTime)
+                {
+                    actionByTime.Invoke(elapsedTime, totalTime);
+                    nextActionTime += actionInterval;
+                }
+
+                yield return null;
+            }
+
+            callback?.Invoke();
+        }
+
+        private IEnumerator CO_WaitUntilConditionCoroutine(Func<bool> condition, Action action)
         {
             yield return new WaitUntil(condition);
             action.Invoke();
         }
+        private IEnumerator CO_WaitUntilConditionCoroutine(Func<bool> condition, Action<float> actionOverTime, Action callback, bool useUnscaledTime)
+        {
+            float elapsedTime = 0f;
 
-        private IEnumerator WaitForEndOfFrameCoroutine(Action action)
+            while (!condition.Invoke())
+            {
+                elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+                actionOverTime.Invoke(elapsedTime);
+                yield return null;
+            }
+
+            callback?.Invoke();
+        }
+        private IEnumerator CO_WaitUntilConditionCoroutine(Func<bool> condition, Action<float> actionByTime, float actionInterval, Action callback, bool useUnscaledTime)
+        {
+            float elapsedTime = 0f;
+            float nextActionTime = 0f;
+
+            while (!condition.Invoke())
+            {
+                elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+
+                if (elapsedTime >= nextActionTime)
+                {
+                    actionByTime.Invoke(elapsedTime);
+                    nextActionTime += actionInterval;
+                }
+
+                yield return null;
+            }
+
+            callback?.Invoke();
+        }
+
+        private IEnumerator CO_WaitForEndOfFrameCoroutine(Action action)
         {
             yield return new WaitForEndOfFrame();
             action.Invoke();
         }
 
-        private IEnumerator WaitForFramesCoroutine(Action action, int frameDelayCount)
+        private IEnumerator CO_WaitForFramesCoroutine(Action action, int frameDelayCount)
         {
             for (int i = 0; i < frameDelayCount; i++)
             {
@@ -86,10 +170,10 @@ namespace UIPackage.Core.Services
 
             if (timeout > 0)
             {
-                StartCoroutine(TryToStopCoroutineAfterTimeout(owner, timeout, id, useUnscaledTime));
+                StartCoroutine(CO_TryToStopCoroutineAfterTimeout(owner, timeout, id, useUnscaledTime));
             }
 
-            var notifyCoroutineFinishedMethod = NotifyCoroutineFinished(owner, coroutine, id);
+            var notifyCoroutineFinishedMethod = CO_NotifyCoroutineFinished(owner, coroutine, id);
             var coroutineWithFinishNotifier = StartCoroutine(notifyCoroutineFinishedMethod);
             _activeCoroutines[owner].Add(id, coroutineWithFinishNotifier);
             return id;
@@ -111,13 +195,13 @@ namespace UIPackage.Core.Services
                 _activeUniqueCoroutines[owner] = new Dictionary<string, Coroutine>();
             }
 
-            var notifyUniqueCoroutineFinishedMethod = NotifyUniqueCoroutineFinished(owner, coroutine, name);
+            var notifyUniqueCoroutineFinishedMethod = CO_NotifyUniqueCoroutineFinished(owner, coroutine, name);
             var coroutineWithFinishNotifier = StartCoroutine(notifyUniqueCoroutineFinishedMethod);
             _activeUniqueCoroutines[owner].Add(name, coroutineWithFinishNotifier);
 
             if (timeout > 0)
             {
-                StartCoroutine(TryToStopUniqueCoroutineAfterTimeout(owner, timeout, name, useUnscaledTime));
+                StartCoroutine(CO_TryToStopUniqueCoroutineAfterTimeout(owner, timeout, name, useUnscaledTime));
             }
         }
 
@@ -130,22 +214,22 @@ namespace UIPackage.Core.Services
             return false;
         }
 
-        private IEnumerator NotifyUniqueCoroutineFinished(object owner, IEnumerator originalCoroutine, string name)
+        private IEnumerator CO_NotifyUniqueCoroutineFinished(object owner, IEnumerator originalCoroutine, string name)
         {
             yield return originalCoroutine;
             _activeUniqueCoroutines[owner ?? this].Remove(name);
         }
 
-        private IEnumerator NotifyCoroutineFinished(object owner, IEnumerator originalCoroutine, Guid coroutineId)
+        private IEnumerator CO_NotifyCoroutineFinished(object owner, IEnumerator originalCoroutine, Guid coroutineId)
         {
             yield return originalCoroutine;
             _activeCoroutines[owner ?? this].Remove(coroutineId);
         }
 
-        private IEnumerator TryToStopCoroutineAfterTimeout(object owner, float seconds, Guid coroutineId, bool useUnscaledTime)
+        private IEnumerator CO_TryToStopCoroutineAfterTimeout(object owner, float seconds, Guid coroutineId, bool useUnscaledTime)
         {
             owner ??= this;
-            yield return StartCoroutine(WaitForSecondsCoroutine(() => { }, seconds, useUnscaledTime));
+            yield return StartCoroutine(CO_WaitForSecondsCoroutine(() => { }, seconds, useUnscaledTime));
             if (!_activeCoroutines.TryGetValue(owner, out var coroutines))
             {
                 yield break;
@@ -156,10 +240,10 @@ namespace UIPackage.Core.Services
             }
         }
 
-        private IEnumerator TryToStopUniqueCoroutineAfterTimeout(object owner, float seconds, string name, bool useUnscaledTime)
+        private IEnumerator CO_TryToStopUniqueCoroutineAfterTimeout(object owner, float seconds, string name, bool useUnscaledTime)
         {
             owner ??= this;
-            yield return StartCoroutine(WaitForSecondsCoroutine(() => { }, seconds, useUnscaledTime));
+            yield return StartCoroutine(CO_WaitForSecondsCoroutine(() => { }, seconds, useUnscaledTime));
             if (!_activeUniqueCoroutines.TryGetValue(owner, out var coroutines))
             {
                 yield break;
