@@ -1,0 +1,21 @@
+{
+    "name": "UIP.Runtime.Extensions",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eb2b32ad9a5af1e4ea59cd02b4b1bb90",
+        "GUID:3d502ee28f8d5d14da42315c5087de26",
+        "GUID:8fb22536063868240b401447d8cf3c2a",
+        "GUID:9950c2af46f516146ad028f53124854b",
+        "GUID:a0092435c447cd241b276366783dee61",
+        "GUID:8a4ba555c225cf1418d6e9af33652650"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,18 @@
+{
+    "name": "UIP.Runtime.InputSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eb2b32ad9a5af1e4ea59cd02b4b1bb90",
+        "GUID:3d502ee28f8d5d14da42315c5087de26",
+        "GUID:a0092435c447cd241b276366783dee61"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

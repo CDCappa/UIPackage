@@ -1,0 +1,16 @@
+{
+    "name": "UIP.Runtime.Installers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3d502ee28f8d5d14da42315c5087de26"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

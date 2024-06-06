@@ -1,0 +1,19 @@
+{
+    "name": "UIP.Runtime.UIManagement",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8fb22536063868240b401447d8cf3c2a",
+        "GUID:eb2b32ad9a5af1e4ea59cd02b4b1bb90",
+        "GUID:3d502ee28f8d5d14da42315c5087de26",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

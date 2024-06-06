@@ -1,0 +1,18 @@
+{
+    "name": "UIP.Runtime.Core.Initialization",
+    "rootNamespace": "",
+    "references": [
+        "GUID:07d7902f72ea1dc46b75c16b6931391e",
+        "GUID:8fb22536063868240b401447d8cf3c2a",
+        "GUID:3d502ee28f8d5d14da42315c5087de26"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
