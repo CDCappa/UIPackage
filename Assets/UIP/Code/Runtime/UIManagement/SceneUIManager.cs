@@ -17,7 +17,6 @@ namespace UIP.Runtime.UIManagement
         private Action _update;
         private Action _lateUpdate;
 
-
         protected virtual void Update() => _update?.Invoke();
 
         private void LateUpdate() => _lateUpdate?.Invoke();
