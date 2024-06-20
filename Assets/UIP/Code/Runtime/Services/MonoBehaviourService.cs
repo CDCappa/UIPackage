@@ -4,10 +4,15 @@ namespace UIP.Runtime.Services
 {
     public class MonoBehaviourService : MonoBehaviour
     {
+        [SerializeField] private bool _separateInstanceInHierarchy = false;
+
         public void Setup()
         {
-            transform.SetParent(null, false);
-            DontDestroyOnLoad(gameObject);
+            if (_separateInstanceInHierarchy)
+            {
+                transform.SetParent(null, false);
+                DontDestroyOnLoad(gameObject);
+            }
         }
     }
 }

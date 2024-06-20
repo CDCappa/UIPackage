@@ -1,5 +1,5 @@
 {
-    "name": "UIP.Runtime.SceneManagement",
+    "name": "UIP.Runtime.Core.SceneManagement",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],

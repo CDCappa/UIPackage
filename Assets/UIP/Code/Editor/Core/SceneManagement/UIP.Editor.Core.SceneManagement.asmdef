@@ -1,10 +1,13 @@
 {
-    "name": "UIP.Runtime.Core.Installers",
+    "name": "UIP.Editor.Core.SceneManagement",
     "rootNamespace": "",
     "references": [
-        "GUID:3d502ee28f8d5d14da42315c5087de26"
+        "GUID:8fb22536063868240b401447d8cf3c2a",
+        "GUID:28ac8d239346f924e90aeb33139245c6"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
