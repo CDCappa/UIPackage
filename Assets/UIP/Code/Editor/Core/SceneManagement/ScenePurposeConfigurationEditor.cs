@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using UIP.Runtime.Core.Initialization;
 using UIP.Runtime.Core.SceneManagement;
 
 using UnityEditor;
@@ -129,7 +130,7 @@ namespace UIP.Editor.Core.SceneManagement
                             RectifyNomenclaturesIfCurrentSelectedFileHasBeenDeleted();
                             SetCurrentSelectedFilePath(path);
                             _userTarget.IsSelected = true;
-                            //UpdateScenePurposeConfiguration(_userTarget);
+                            UpdateScenePurposeConfiguration(_userTarget);
                         }
                     }
                     EditorUtility.SetDirty(instance);
@@ -198,6 +199,11 @@ namespace UIP.Editor.Core.SceneManagement
                     MessageType.None
                 );
             }
+        }
+
+        private void UpdateScenePurposeConfiguration(ScenePurposeConfiguration scenePurposeContainer)
+        {
+            UIPModuleIntegrator.SetScenePurposeConfiguration(scenePurposeContainer);
         }
 
         private List<string> GetPreviousAllInstances()

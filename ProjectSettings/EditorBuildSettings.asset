@@ -4,5 +4,26 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/UIP/Scenes/Demo/Scene_FakeGame-Initialize.unity
+    guid: a471d3782bbca8d45a69f47ab5008a1c
+  - enabled: 1
+    path: Assets/UIP/Scenes/Scene_UIP_Scene-MainMenu.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/UIP/Scenes/Scene_UIP-Scene-Loading.unity
+    guid: c3ae12ee93661ee448a74542ccd56720
+  - enabled: 1
+    path: Assets/UIP/Scenes/Scene_UIP_Scene-Game.unity
+    guid: 3e2b441e9f0205e4192311ed595cac4f
+  - enabled: 1
+    path: Assets/UIP/Scenes/Scene_UIP_Scene-Empty.unity
+    guid: 39c99d3a246b5c844a179fd957f46335
+  - enabled: 1
+    path: Assets/UIP/Scenes/Demo/Scene_FakeGame-Game.unity
+    guid: 95f82548ccf4fd94b92532359e2e90b1
+  - enabled: 1
+    path: Assets/UIP/Scenes/Demo/Scene_FakeGame-LoadingGame.unity
+    guid: 745da91bbf08ed04fb6382601186f350
   m_configObjects: {}
