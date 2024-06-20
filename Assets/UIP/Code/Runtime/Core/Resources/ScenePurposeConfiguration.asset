@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0caaa2494fdb61940b0ccc0051c3ef3e, type: 3}
+  m_Name: ScenePurposeConfiguration
+  m_EditorClassIdentifier: 
+  scenes:
+  - Purpose: 1
+    Asset: {fileID: 0}
+  - Purpose: 2
+    Asset: {fileID: 102900000, guid: 745da91bbf08ed04fb6382601186f350, type: 3}
+  - Purpose: 3
+    Asset: {fileID: 0}
+  - Purpose: 4
+    Asset: {fileID: 102900000, guid: 95f82548ccf4fd94b92532359e2e90b1, type: 3}
+  _isValid: 1
+  _isPreviousValid: 0
